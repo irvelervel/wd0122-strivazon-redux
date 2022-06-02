@@ -20,8 +20,37 @@ const mainReducer = (state = initialState, action) => {
   // our reducer needs to be told what to do when a particular action gets dispatched
   // so we have a bunch of possible actions, so let's write a switch case to manage them all!
   switch (action.type) {
-    // case 'ADD_TO_CART'
-    // case2
+    // the book is getting passed with action.payload
+    case 'ADD_TO_CART':
+      return {
+        // this is now going to be the new value for the redux store
+        // ALWAYS return an object from your reducer case!
+        ...state,
+        cart: {
+          ...state.cart,
+          //   content: state.cart.content.push(action.payload) // <-- TERRIBLE
+          // push is FORBIDDEN here!
+          content: [...state.cart.content, action.payload], // this works
+          //   content: state.cart.content.concat(action.payload) // this also works
+          // this is generating a new array! it's not messing up with the existing state
+          // you DON'T WANT to mutate your arguments in a reducer function, because it's a pure function!s
+        },
+      }
+    case 'REMOVE_FROM_CART':
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          //   content: [
+          //     ...state.cart.content.slice(0, action.payload),
+          //     ...state.cart.content.slice(
+          //       action.payload + 1,
+          //       state.cart.content.length
+          //     ),
+          //   ],
+          content: state.cart.content.filter((book, i) => i !== action.payload),
+        },
+      }
     default:
       // the default case is for an action.type that we didn't think of
       // maybe an edge case, maybe a bug, something unhandled...

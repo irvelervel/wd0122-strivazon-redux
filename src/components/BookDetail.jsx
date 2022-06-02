@@ -14,9 +14,11 @@ const mapStateToProps = (state) => {
 // the keys of the object mapDispatchToProps is returning are typically METHODS
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCart: () => {
+    addToCart: (bookToAdd) => {
       dispatch({
-        type: 'ADD_TO_CART',
+        type: 'ADD_TO_CART', // this is mandatory
+        payload: bookToAdd, // this is not a mandatory property for every action
+        // but our reducer needs this book in order to fill the cart correctly!
       })
     },
   }
@@ -67,7 +69,7 @@ class BookDetail extends Component {
                 <Button
                   color="primary"
                   onClick={() => {
-                    this.props.addToCart()
+                    this.props.addToCart(this.state.book)
                   }}
                 >
                   ADD TO CART
