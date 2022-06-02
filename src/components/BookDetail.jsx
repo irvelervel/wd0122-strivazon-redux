@@ -1,17 +1,37 @@
-import { Component } from "react";
-import { Col, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import { Component } from 'react'
+import { Col, Row } from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  return {}
+}
+
+// mapDispatchToProps is a function returning an object!
+// every key in the object it's returning will be a prop for the component!
+
+// if the keys of the object mapStateToProps is returning are tipically properties,
+// the keys of the object mapDispatchToProps is returning are typically METHODS
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: () => {
+      dispatch({
+        type: 'ADD_TO_CART',
+      })
+    },
+  }
+}
 
 class BookDetail extends Component {
   state = {
     book: null,
-  };
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.bookSelected !== this.props.bookSelected) {
       this.setState({
         book: this.props.bookSelected,
-      });
+      })
     }
   }
 
@@ -44,7 +64,12 @@ class BookDetail extends Component {
                   <span className="font-weight-bold">Price:</span>
                   {this.state.book.price}
                 </p>
-                <Button color="primary" onClick={() => {}}>
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    this.props.addToCart()
+                  }}
+                >
                   ADD TO CART
                 </Button>
               </Col>
@@ -58,8 +83,11 @@ class BookDetail extends Component {
           </Row>
         )}
       </div>
-    );
+    )
   }
 }
 
-export default BookDetail;
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetail)
+
+// what do I need to do from here? do I need just to read or do I need to write?
+// I actually just need to "write" (dispatch an action) from here!
