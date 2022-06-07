@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux'
-import { addToCartAction } from '../redux/actions'
+import { addToCartAction, addToCartActionWithThunk } from '../redux/actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (bookToAdd) => {
-      dispatch(addToCartAction(bookToAdd))
+      dispatch(addToCartActionWithThunk(bookToAdd))
     },
   }
 }
