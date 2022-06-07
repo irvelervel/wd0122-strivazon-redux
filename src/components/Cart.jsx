@@ -2,11 +2,8 @@ import Button from 'react-bootstrap/Button'
 import { FaTrash } from 'react-icons/fa'
 import { Col, Row } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { removeFromCartAction } from '../redux/actions'
 
 const mapStateToProps = (state) => {
-  // in mapStateToProps, the state that is going to be received as the argument
-  // of the function, is STILL going to be the whole cake!
   return {
     cart: state.cart.content,
   }
@@ -15,7 +12,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     removeFromCart: (indexToRemove) => {
-      dispatch(removeFromCartAction(indexToRemove))
+      dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: indexToRemove,
+      })
     },
   }
 }

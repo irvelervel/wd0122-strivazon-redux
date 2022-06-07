@@ -2,8 +2,6 @@
 // in order to computer the NEW application state!
 // it's also a PURE FUNCTION (same input --> same output)
 
-import { ADD_TO_CART, REMOVE_FROM_CART, SET_USERNAME } from '../actions'
-
 // just like a component's state, even the redux store has to start from somewhere...
 // so let's write the initial state for Redux!
 
@@ -12,9 +10,6 @@ const initialState = {
   cart: {
     // in the cart, let's remember an array of books
     content: [], // the value of content will be our array of books in the cart!
-  },
-  user: {
-    firstName: '',
   },
 }
 
@@ -26,7 +21,7 @@ const mainReducer = (state = initialState, action) => {
   // so we have a bunch of possible actions, so let's write a switch case to manage them all!
   switch (action.type) {
     // the book is getting passed with action.payload
-    case ADD_TO_CART:
+    case 'ADD_TO_CART':
       return {
         // this is now going to be the new value for the redux store
         // ALWAYS return an object from your reducer case!
@@ -41,7 +36,7 @@ const mainReducer = (state = initialState, action) => {
           // you DON'T WANT to mutate your arguments in a reducer function, because it's a pure function!s
         },
       }
-    case REMOVE_FROM_CART:
+    case 'REMOVE_FROM_CART':
       return {
         ...state,
         cart: {
@@ -54,14 +49,6 @@ const mainReducer = (state = initialState, action) => {
           //     ),
           //   ],
           content: state.cart.content.filter((book, i) => i !== action.payload),
-        },
-      }
-    case SET_USERNAME:
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          firstName: action.payload,
         },
       }
     default:
